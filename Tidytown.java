@@ -1,53 +1,33 @@
+package Assignments.Com410.A4;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class TidyTown {
+
     public static void main(String[] args) {
-        TidyTown tidyTown = new TidyTown();
-        tidyTown.registerVolunteers();
-    }
-    private ArrayList<String> volunteers;
 
-    public TidyTown() {
-        volunteers = new ArrayList<>();
-    }
+        ArrayList<String> volunteers = new ArrayList<String>();
+        boolean finished = false;
+        Scanner keyboard = new Scanner(System.in);
+        String name;
+        int pos;
 
-    public void registerVolunteers() {
-        Scanner scanner = new Scanner(System.in);
-      
-
-        while (true) {
+        do {
             System.out.print("Enter a name or xxx to finish > ");
-            String name = scanner.nextLine();
-            if (name.equalsIgnoreCase("xxx")) {
-                break;
+            name = keyboard.nextLine();
+            if (name.equals("xxx"))
+                finished = true;
+            else {
+                pos = 0;
+                while (pos < volunteers.size() && name.compareTo(volunteers.get(pos)) > 0) pos++;
+                volunteers.add(pos, name);
             }
-            insertInOrder(name);
-        }
+        } while (!finished);
 
-        System.out.println("\n Tidytown Volunteers");
-        System.out.println("------------------- \n");
-        displayNames();
-    }
-
-    private void insertInOrder(String name) {
-        if (volunteers.isEmpty()) {
-            volunteers.add(name);
-            return;
-        }
-
-        int i = 0;
-        while (i < volunteers.size() && name.compareToIgnoreCase(volunteers.get(i)) > 0) {
-            i++;
-        }
-        volunteers.add(i, name);
-    }
-
-    private void displayNames() {
-        for (String volunteer : volunteers) {
-            System.out.println(volunteer);
+        System.out.println("\nTidytown Volunteers\n-------------------\n");
+        for (String person : volunteers) {
+            System.out.println(person);
         }
     }
 
-    
 }
